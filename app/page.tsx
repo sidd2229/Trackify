@@ -1,7 +1,7 @@
 "use client";
 
 import BottomNav from "@/components/BottomNav";
-import { Plus } from "lucide-react";
+import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -16,6 +16,7 @@ export default function Home() {
   const [note, setNote] = useState("");
 
   const [expenses, setExpenses] = useState<any[]>([]);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const getCategoryIcon = (category: string) => {
 
     switch (category) {
@@ -69,6 +70,31 @@ export default function Home() {
 
   }, []);
 
+  const handleDeleteExpense = (id: number) => {
+
+    const updatedExpenses = expenses.filter(
+      (expense) => expense.id !== id
+    );
+
+    setExpenses(updatedExpenses);
+
+    localStorage.setItem(
+      "trackify-expenses",
+      JSON.stringify(updatedExpenses)
+    );
+  };
+
+  const handleEditExpense = (expense: any) => {
+
+    setAmount(expense.amount);
+    setCategory(expense.category);
+    setNote(expense.note);
+
+    setEditingId(expense.id);
+
+    setOpen(true);
+  };
+
   // Add Expense
   const handleAddExpense = () => {
 
@@ -76,21 +102,41 @@ export default function Home() {
       alert("Please fill all fields");
       return;
     }
+    let updatedExpenses;
 
-    const newExpense = {
-      id: Date.now(),
-      amount,
-      category,
-      note,
+    if (editingId) {
 
-      date: new Date().toLocaleDateString("en-IN", {
-        day: "numeric",
-        month: "short",
-        year: "numeric"
-      })
-    };
+      updatedExpenses = expenses.map((expense) =>
 
-    const updatedExpenses = [newExpense, ...expenses];
+        expense.id === editingId
+          ? {
+            ...expense,
+            amount,
+            category,
+            note,
+          }
+          : expense
+      );
+
+      setEditingId(null);
+
+    } else {
+
+      const newExpense = {
+        id: Date.now(),
+        amount,
+        category,
+        note,
+
+        date: new Date().toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "short",
+          year: "numeric"
+        })
+      };
+
+      updatedExpenses = [newExpense, ...expenses];
+    }
 
     setExpenses(updatedExpenses);
 
@@ -251,9 +297,27 @@ export default function Home() {
 
                     </div>
 
-                    <p className="text-red-400 font-semibold">
-                      - ₹{expense.amount}
-                    </p>
+                    <div className="flex items-center gap-4">
+
+                      <p className="text-red-400 font-semibold">
+                        - ₹{expense.amount}
+                      </p>
+
+                      <button
+                        onClick={() => handleEditExpense(expense)}
+                        className="text-blue-400"
+                      >
+                        <Pencil size={18} />
+                      </button>
+
+                      <button
+                        onClick={() => handleDeleteExpense(expense.id)}
+                        className="text-red-400"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+
+                    </div>
 
                   </div>
 
@@ -283,7 +347,7 @@ export default function Home() {
               <div className="bg-zinc-950 w-full max-w-md rounded-t-3xl p-6">
 
                 <h2 className="text-2xl font-bold">
-                  Add Expense
+                  {editingId ? "Edit Expense" : "Add Expense"}
                 </h2>
 
                 <div className="space-y-4 mt-6">
@@ -352,7 +416,7 @@ export default function Home() {
                     onClick={handleAddExpense}
                     className="w-full bg-violet-600 py-4 rounded-2xl font-medium"
                   >
-                    Save Expense
+                    {editingId ? "Update Expense" : "Save Expense"}
                   </button>
 
                   <button
