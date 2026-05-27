@@ -33,7 +33,7 @@ Trackify is a modern expense tracker PWA built using Next.js and Tailwind CSS.
 
 ## 🌐 Live Demo
 
-https://trackifybysid.vercel.app
+https://trackifybysidd.vercel.app
 
 ## ⚙️ Run Locally
 
