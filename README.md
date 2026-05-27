@@ -13,6 +13,14 @@ Trackify is a modern expense tracker PWA built using Next.js and Tailwind CSS.
 - 📂 LocalStorage Data Management
 - 📅 Expense Date Tracking
 
+## 🔮 Future Upgrades
+
+- ☁️ Cloud Database Integration
+- 🔑 User Authentication
+- 📤 Expense Export (PDF/Excel)
+- 🔔 Expense Reminders
+- 🔄 Multi-device Sync
+
 ## 🛠️ Tech Stack
 
 - Next.js
