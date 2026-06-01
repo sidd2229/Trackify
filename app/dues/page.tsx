@@ -161,7 +161,12 @@ export default function DuesPage() {
 
                     <div className="glass-card rounded-2xl p-4 text-center">
                         <p className="text-sm">📊 Net Balance</p>
-                        <h2 className="font-bold mt-2">
+                        <h2
+                            className={`font-bold mt-2 ${netBalance >= 0
+                                ? "text-green-400"
+                                : "text-red-400"
+                                }`}
+                        >
                             ₹{netBalance}
                         </h2>
                     </div>
@@ -258,66 +263,70 @@ export default function DuesPage() {
                 </div>
 
                 {/* Settled Dues */}
-<div className="mt-8">
+                <div className="mt-8">
 
-  <h2 className="text-xl font-semibold">
-    ✅ Settled Dues
-  </h2>
+                    <h2 className="text-xl font-semibold">
+                        ✅ Settled Dues
+                    </h2>
 
-  <div className="space-y-4 mt-4">
+                    <div className="space-y-4 mt-4">
 
-    {
-      dues
-        .filter((due) => due.settled)
-        .map((due) => (
+                        {
+                            dues
+                                .filter((due) => due.settled)
+                                .map((due) => (
 
-          <div
-            key={due.id}
-            className="glass-card rounded-2xl p-4 border border-green-500/30"
-          >
+                                    <div
+                                        key={due.id}
+                                        className="glass-card rounded-2xl p-4 border border-green-500/30"
+                                    >
 
-            <div className="flex justify-between">
+                                        <div className="flex justify-between">
 
-              <div>
+                                            <div>
 
-                <h3 className="font-semibold">
-                  {due.person}
-                </h3>
+                                                <h3 className="font-semibold">
+                                                    {due.person}
+                                                </h3>
 
-                <p className="text-sm text-zinc-400 mt-1">
+                                                <p className="text-sm text-zinc-400 mt-1">
 
-                  {
-                    due.type === "lent"
-                      ? "📤 Lent Money"
-                      : "📥 Borrowed Money"
-                  }
+                                                    {
+                                                        due.type === "lent"
+                                                            ? "📤 Lent Money"
+                                                            : "📥 Borrowed Money"
+                                                    }
 
-                </p>
+                                                </p>
 
-                <p className="text-zinc-500 text-sm mt-2">
-                  {due.note}
-                </p>
+                                                <p className="text-zinc-500 text-sm mt-2">
+                                                    {due.note || "No note"}
+                                                </p>
 
-                <p className="text-green-400 text-sm mt-2">
-                  ✔ Settled
-                </p>
+                                                <p className="text-zinc-600 text-xs mt-2">
+                                                    📅 {due.date}
+                                                </p>
 
-              </div>
+                                                <p className="text-green-400 text-sm mt-2">
+                                                    ✔ Settled
+                                                </p>
 
-              <p className="font-bold">
-                ₹{due.amount}
-              </p>
+                                            </div>
 
-            </div>
+                                            <p className="font-bold">
+                                                ₹{due.amount}
+                                            </p>
 
-          </div>
+                                        </div>
 
-        ))
-    }
+                                    </div>
 
-  </div>
+                                ))
+                        }
 
-</div>
+                    </div>
+
+                </div>
 
                 <button
                     onClick={() => setOpen(true)}
