@@ -7,7 +7,8 @@ import {
   House,
   ChartColumn,
   Wallet,
-  Settings
+  Settings,
+  HandCoins
 } from "lucide-react";
 
 export default function BottomNav() {
@@ -20,11 +21,10 @@ export default function BottomNav() {
 
       <Link
         href="/"
-        className={`flex flex-col items-center ${
-          pathname === "/"
+        className={`flex flex-col items-center ${pathname === "/"
             ? "text-violet-400"
             : "text-zinc-500"
-        }`}
+          }`}
       >
         <House size={22} />
 
@@ -35,11 +35,10 @@ export default function BottomNav() {
 
       <Link
         href="/analytics"
-        className={`flex flex-col items-center ${
-          pathname === "/analytics"
+        className={`flex flex-col items-center ${pathname === "/analytics"
             ? "text-violet-400"
             : "text-zinc-500"
-        }`}
+          }`}
       >
         <ChartColumn size={22} />
 
@@ -49,12 +48,24 @@ export default function BottomNav() {
       </Link>
 
       <Link
-        href="/budget"
-        className={`flex flex-col items-center ${
-          pathname === "/budget"
+        href="/dues"
+        className={`flex flex-col items-center ${pathname === "/dues"
             ? "text-violet-400"
             : "text-zinc-500"
-        }`}
+          }`}
+      >
+        <HandCoins size={22} />
+
+        <span className="text-xs mt-1">
+          Dues
+        </span>
+      </Link>
+      <Link
+        href="/budget"
+        className={`flex flex-col items-center ${pathname === "/budget"
+            ? "text-violet-400"
+            : "text-zinc-500"
+          }`}
       >
         <Wallet size={22} />
 
@@ -65,11 +76,10 @@ export default function BottomNav() {
 
       <Link
         href="/settings"
-        className={`flex flex-col items-center ${
-          pathname === "/settings"
+        className={`flex flex-col items-center ${pathname === "/settings"
             ? "text-violet-400"
             : "text-zinc-500"
-        }`}
+          }`}
       >
         <Settings size={22} />
 
